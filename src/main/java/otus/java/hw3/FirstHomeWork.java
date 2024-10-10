@@ -1,4 +1,5 @@
 package otus.java.hw3;
+
 import java.util.Scanner;
 
 public class FirstHomeWork {
@@ -70,5 +71,3 @@ public class FirstHomeWork {
         }
     }
 }
-
-
