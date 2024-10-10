@@ -33,8 +33,7 @@ public class FirstHomeWork {
         int result = a + b + c;
         if (result >= 0) {
             System.out.println("Сумма положительная");
-        }
-        if (result < 0) {
+        } else if (result < 0) {
             System.out.println("Сумма отрицательная");
         }
     }
@@ -43,11 +42,9 @@ public class FirstHomeWork {
         int data = 18;
         if (data <= 10) {
             System.out.println("Красный");
-        }
-        if (data > 10 && data <= 20) {
+        } else if (data > 10 && data <= 20) {
             System.out.println("Желтый");
-        }
-        if (data > 20) {
+        } else if (data > 20) {
             System.out.println("Зеленый");
         }
     }
@@ -57,8 +54,7 @@ public class FirstHomeWork {
         int b = 18;
         if (a >= b) {
             System.out.println(a + ">=" + b);
-        }
-        if (a < b) {
+        } else if (a < b) {
             System.out.println(a + "<" + b);
         }
     }
