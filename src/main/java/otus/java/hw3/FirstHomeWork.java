@@ -39,18 +39,18 @@ public class FirstHomeWork {
     }
 
     public static void selectColor() {
-        int data = 18;
+        int data =22;
         if (data <= 10) {
             System.out.println("Красный");
         } else if (data > 10 && data <= 20) {
             System.out.println("Желтый");
-        } else if (data > 20) {
+        } else {
             System.out.println("Зеленый");
         }
     }
 
     public static void compareNumbers() {
-        int a = 12;
+        int a = 22;
         int b = 18;
         if (a >= b) {
             System.out.println(a + ">=" + b);
@@ -60,9 +60,9 @@ public class FirstHomeWork {
     }
 
     public static void addOrSubtractAndPrint(int initValue, int delta, boolean increment) {
-        if (increment == true) {
+        if (increment) {
             System.out.println(initValue + delta);
-        } else if (increment == false) {
+        } else {
             System.out.println(initValue - delta);
         }
     }
