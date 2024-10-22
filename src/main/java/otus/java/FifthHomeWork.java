@@ -16,15 +16,11 @@ public class FifthHomeWork {
         printBiggerPartArray(arrFour);
     }
 
-    //    1/ Реализуйте метод, принимающий в качестве аргументов целое число и строку,
-//    и печатающий в консоль строку указанное количество раз
     public static void printString(int value, String stringValue) {
         for (int i = 0; i < value; i++) {
             System.out.println(stringValue);
         }
     }
-// 2/Реализуйте метод, принимающий в качестве аргумента целочисленный массив, суммирующий все элементы,
-// значение которых больше 5, и печатающий полученную сумму в консоль.
 
     public static void sumElementsOverFive(int[] arrTwo) {
         int sum = 0;
@@ -37,9 +33,6 @@ public class FifthHomeWork {
 
     }
 
-
-    //            3/Реализуйте метод, принимающий в качестве аргументов целое число и ссылку на целочисленный массив,
-//            метод должен заполнить каждую ячейку массива указанным числом.
     public static void fillArray(int[] array, int initialValue) {
         for (int i = 0; i < array.length; i++) {
             array[i] = initialValue;
@@ -47,8 +40,6 @@ public class FifthHomeWork {
 
     }
 
-    //            4/Реализуйте метод, принимающий в качестве аргументов целое число и ссылку на целочисленный массив,
-//            увеличивающий каждый элемент которого на указанное число.
     public static void eachElementPlusNumber(int[] arrThree) {
         int a = 4;
         for (int i = 0; i < arrThree.length; i++) {
@@ -58,8 +49,6 @@ public class FifthHomeWork {
 
     }
 
-    //            5/Реализуйте метод, принимающий в качестве аргумента целочисленный массив,
-//            и печатающий в консоль сумма элементов какой из половин массива больше.
     public static void printBiggerPartArray(int[] arrFour) {
         int sum1 = 0;
         int sum2 = 0;
