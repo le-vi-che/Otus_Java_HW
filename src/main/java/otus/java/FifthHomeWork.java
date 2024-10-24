@@ -8,11 +8,12 @@ public class FifthHomeWork {
         int[] arrTwo = {3, 5, 14, 2, 3, 9, 0, 1, 6};
         int[] arrThree = {3, 1, 13, 0, 11, 15, 6, 3, 9, 4};
         int[] arrFour = {1, 9, 3, 7, 5, 6, 1, 2, 9, 10};
+        int a = 4;
 
         printString(8, "Java");
         sumElementsOverFive(arrTwo);
         fillArray(arr, 8);
-        eachElementPlusNumber(arrThree);
+        eachElementPlusNumber(a, arrThree);
         printBiggerPartArray(arrFour);
     }
 
@@ -40,10 +41,9 @@ public class FifthHomeWork {
 
     }
 
-    public static void eachElementPlusNumber(int[] arrThree) {
-        int a = 4;
+    public static void eachElementPlusNumber(int a, int[] arrThree) {
         for (int i = 0; i < arrThree.length; i++) {
-            arrThree[i] = arrThree[i] + a;
+            arrThree[i] += a;
         }
         System.out.println(Arrays.toString(arrThree));
 
