@@ -58,12 +58,13 @@ public class Lesson7 {
     }
 
     public static int sumOfSecondRow(int[][] arr) {
+        if (arr.length < 2) {
+            return -1;
+        }
         int sumSecondRow = 0;
         for (int i = 1; i < 2; i++) {
             for (int j = 0; j < arr[i].length; j++) {
-                if (i >= 1)
-                    sumSecondRow += arr[1][j];
-                else sumSecondRow = -1;
+                sumSecondRow += arr[1][j];
             }
         }
         System.out.println(sumSecondRow);
