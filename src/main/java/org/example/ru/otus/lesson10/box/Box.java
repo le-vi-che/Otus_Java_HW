@@ -4,7 +4,7 @@ public class Box {
     private String color;
     private String size;
     private boolean isOpened;
-    private boolean isEmpty;
+    private String item;
 
     public String getColor() {
         return color;
@@ -18,15 +18,13 @@ public class Box {
         this.color = color;
     }
 
+    public String getItem() {
+        return item;
+    }
 
     public boolean isOpened() {
         return isOpened;
     }
-
-    public boolean isEmpty() {
-        return isEmpty;
-    }
-
 
     public Box(String color, String size) {
         this.color = color;
@@ -34,14 +32,21 @@ public class Box {
     }
 
     public void open() {
-        isOpened = true;
-        System.out.println("The box open");
-
+        if (isOpened) {
+            System.out.println("The box is already open");
+        } else {
+            isOpened = true;
+            System.out.println("The box is open");
+        }
     }
 
     public void close() {
-        isOpened = false;
-        System.out.println("The box close");
+        if (!isOpened) {
+            System.out.println("The box is already close");
+        } else {
+            isOpened = false;
+            System.out.println("The box is close");
+        }
     }
 
     public void changeColor(String newColor) {
@@ -53,36 +58,14 @@ public class Box {
         System.out.println("The " + color + " box has a size: " + size);
     }
 
-    public void fillingTheBox() {
-        System.out.println("Put items in the box");
-        if (isOpened == true && isEmpty == true) {
-            System.out.println("The box is open and empty, you can place the item in the box");
-        }
-        if (isOpened == false && isEmpty == true) {
-            System.out.println("The box is close and empty");
-        }
-        if (isOpened == true && isEmpty == false) {
-            System.out.println("The box is open and not empty");
-        }
-        if (isOpened == false && isEmpty == false) {
-            System.out.println("The box is close and not empty");
+    public void putItem(String item) {
+        if (!(this.item == null)) {
+            System.out.println("There is already an item in the box. Use another box");
+        } else if (this.isOpened) {
+            System.out.println("The box is closed. Before you put the item in the box, you need to open it");
+        } else {
+            this.item = item;
+            System.out.println("An item " + item + " is placed in a box ");
         }
     }
-
-    public void clearingTheBox() {
-        System.out.println("Remove items in the box");
-        if (isOpened == true && isEmpty == true) {
-            System.out.println("The box is open and empty, nothing to delete");
-        }
-        if (isOpened == false && isEmpty == true) {
-            System.out.println("The box is close and empty");
-        }
-        if (isOpened == true && isEmpty == false) {
-            System.out.println("The box is open and not empty, delete the item");
-        }
-        if (isOpened == false && isEmpty == false) {
-            System.out.println("The box is close and not empty");
-        }
-    }
-
 }
