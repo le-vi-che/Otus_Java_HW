@@ -7,6 +7,14 @@ public class User {
     private int yearOfBirth;
     private String email;
 
+    public User(String name, String patronymic, String surname, int yearOfBirth, String email) {
+        this.name = name;
+        this.surname = surname;
+        this.patronymic = patronymic;
+        this.yearOfBirth = yearOfBirth;
+        this.email = email;
+    }
+
     public String getName() {
         return name;
     }
@@ -48,16 +56,8 @@ public class User {
         this.email = email;
     }
 
-    public User(String name, String patronymic, String surname, int yearOfBirth, String email) {
-        this.name = name;
-        this.surname = surname;
-        this.patronymic = patronymic;
-        this.yearOfBirth = yearOfBirth;
-        this.email = email;
-    }
-
-    public void info() {
-        System.out.println("ФИО: " + this.surname + " " + this.name + " " + this.patronymic + "\n" + "Год рождения: " + this.yearOfBirth + "\n" + "e-mail: " + this.email);
+    public String toString(){
+        return "ФИО: " + this.surname + " " + this.name + " " + this.patronymic + "\n" + "Год рождения: " + this.yearOfBirth + "\n" + "e-mail: " + this.email;
     }
 
 }

@@ -1,5 +1,7 @@
 package org.example.ru.otus.lesson10.user;
 
+import java.util.Arrays;
+
 public class MainAppUser {
     public static void main(String[] args) {
         User users[] = {new User("Ivan", "Ivanovich", "Ivanov", 1985, "iii@ii.ru"),
@@ -14,13 +16,14 @@ public class MainAppUser {
                 new User("Anton", "Antonovich", "Repkin", 1980, "aar@ii.ru")
         };
 
+        System.out.println(Arrays.toString(users));
 
+        int currentYear = java.time.Year.now().getValue();
         for (int i = 0; i < users.length; i++) {
-            if ((2024 - users[i].getYearOfBirth()) > 40) {
-                users[i].info();
+            if ((currentYear - users[i].getYearOfBirth()) > 40) {
+                users[i].toString();
             }
         }
     }
 }
-
 

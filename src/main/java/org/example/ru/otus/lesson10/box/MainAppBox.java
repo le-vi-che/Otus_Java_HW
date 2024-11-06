@@ -7,8 +7,7 @@ public class MainAppBox {
 
         box1.changeColor("yellow");
         box1.info();
-        box1.fillingTheBox();
-        box1.clearingTheBox();
+        box2.putItem("ball");
     }
 
 }

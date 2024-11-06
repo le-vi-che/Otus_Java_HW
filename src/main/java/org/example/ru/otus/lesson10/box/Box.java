@@ -6,6 +6,11 @@ public class Box {
     private boolean isOpened;
     private String item;
 
+    public Box(String color, String size) {
+        this.color = color;
+        this.size = size;
+    }
+
     public String getColor() {
         return color;
     }
@@ -24,11 +29,6 @@ public class Box {
 
     public boolean isOpened() {
         return isOpened;
-    }
-
-    public Box(String color, String size) {
-        this.color = color;
-        this.size = size;
     }
 
     public void open() {
@@ -59,9 +59,9 @@ public class Box {
     }
 
     public void putItem(String item) {
-        if (!(this.item == null)) {
+        if (this.item != null) {
             System.out.println("There is already an item in the box. Use another box");
-        } else if (this.isOpened) {
+        } else if (!this.isOpened) {
             System.out.println("The box is closed. Before you put the item in the box, you need to open it");
         } else {
             this.item = item;
