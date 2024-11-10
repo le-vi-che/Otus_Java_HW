@@ -1,5 +1,9 @@
 package otus.java.basic.oop;
 
+import otus.java.basic.oop.animals.Cat;
+import otus.java.basic.oop.animals.Dog;
+import otus.java.basic.oop.animals.Horse;
+
 public class App {
     public static void main(String[] args) {
         Cat cat = new Cat("Дези", 18, 2, 0);
