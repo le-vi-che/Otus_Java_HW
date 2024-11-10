@@ -1,4 +1,4 @@
-package otus.java.basic.oop;
+package otus.java.basic.oop.animals;
 
 public abstract class Animal {
     String name;

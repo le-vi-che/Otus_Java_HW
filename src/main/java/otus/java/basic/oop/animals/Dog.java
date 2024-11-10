@@ -1,4 +1,4 @@
-package otus.java.basic.oop;
+package otus.java.basic.oop.animals;
 
 public class Dog extends Animal {
 
@@ -14,7 +14,7 @@ public class Dog extends Animal {
             System.out.println("Собака " + name + " устала!");
             return -1;
         }
-        int time = distance / speedRun;
+        int time = distance / speedSwim;
         if (endurance > 1) {
             System.out.println("Собака " + name + " проплыла " + distance + " метров со скоростью " + speedRun + " м/с");
         }

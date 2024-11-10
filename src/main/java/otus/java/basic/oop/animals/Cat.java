@@ -1,4 +1,4 @@
-package otus.java.basic.oop;
+package otus.java.basic.oop.animals;
 
 public class Cat extends Animal {
     public Cat(String name, int endurance, int speedRun, int speedSwim) {
