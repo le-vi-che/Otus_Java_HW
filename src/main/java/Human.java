@@ -20,14 +20,14 @@ public class Human {
         return false;
     }
 
-    public boolean leaveTransport(Movement transport) {
-        if (currentTransport == transport) {
-            System.out.println(name + " покинул транспорт");
-            return true;
+    public boolean leaveTransport() {
+        if (currentTransport == null) {
+            System.out.println(name + " не в транспортном средстве");
+            return false;
         }
+        System.out.println(name + " покинул транспорт");
         currentTransport = null;
-        System.out.println(name + " не в транспортном средстве");
-        return false;
+        return true;
     }
 
     public boolean move(int distance, TypeOfTerrain terrain) {

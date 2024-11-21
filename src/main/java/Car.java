@@ -19,11 +19,12 @@ public class Car implements Movement {
             System.out.println("Машина не может проехать по местности " + terrain);
             return false;
         }
-        if ((oil - (oil / distance) * 10) <= 0) {
+        int fuelConsumption = distance * 10;
+        if (oil / fuelConsumption <= 0) {
             System.out.println("Машина не может проехать дистанцию " + distance + " км. Не хватает бензина");
             return false;
         }
-        oil -= (oil / distance) * 10;
+        oil -= fuelConsumption;
         System.out.println("Машина проехала по местности " + terrain + " дистанцию " + distance + " км");
         return true;
     }
