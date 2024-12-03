@@ -25,7 +25,7 @@ public class App {
                 try {
                     result += Integer.parseInt(arr[i][j]);
                 } catch (NumberFormatException e) {
-                    throw new AppArrayDataException("Не удалось преобразовать элемент массива [" + i + "][" + j + "]");
+                    throw new AppArrayDataException(String.format("Не удалось преобразовать элемент массива [%d][%d]", i, j));
                 }
             }
         }
