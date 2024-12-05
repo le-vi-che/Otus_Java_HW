@@ -59,6 +59,7 @@ public class App {
         List<Employee> names = new ArrayList<>();
         for (Employee employee : employees) {
             names.add(employee);
+            //names.add(employee.getName());
         }
         return names;
     }
@@ -74,12 +75,12 @@ public class App {
     }
 
 
-    public static boolean minAverAgeEmployee(List<Employee> employees, int minAverAge) {
+    public static boolean minAverAgeEmployee(List<Employee> employees, double minAverAge) {
         int totalAge = 0;
         for (Employee employee : employees) {
             totalAge += employee.getAge();
         }
-        int averageAge = totalAge / employees.size();
+        double averageAge = (double) totalAge / employees.size();
         return averageAge > minAverAge;
     }
 
