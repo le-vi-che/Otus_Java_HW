@@ -16,7 +16,8 @@ public class PhoneBook {
     }
 
     public List<String> find(String name) {
-        return data.getOrDefault(name, new ArrayList<>());
+    //    return data.getOrDefault(name, new ArrayList<>());
+        return data.getOrDefault(name, Collections.emptyList());
     }
 
     public String containsPhoneNumber(String phone) {
@@ -30,6 +31,6 @@ public class PhoneBook {
 
     @Override
     public String toString() {
-        return data.toString();
+        return "PhoneBook: " + data;
     }
 }
