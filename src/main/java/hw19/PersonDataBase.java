@@ -1,13 +1,19 @@
 package hw19;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class PersonDataBase {
-    private Map<Long, Person> personDataBase;
+    private final Map<Long, Person> personDataBase = new HashMap<>();
+    private final Set<Position> position = new HashSet<>();
 
     public PersonDataBase() {
-        personDataBase = new HashMap<>();
+        position.add(Position.MANAGER);
+        position.add(Position.DIRECTOR);
+        position.add(Position.SENIOR_MANAGER);
+        position.add(Position.BRANCH_DIRECTOR);
     }
 
     public Person findById(Long id) {
@@ -19,11 +25,7 @@ public class PersonDataBase {
     }
 
     public boolean isManager(Person person) {
-
-        return person.getPosition() == Position.MANAGER ||
-                person.getPosition() == Position.DIRECTOR ||
-                person.getPosition() == Position.BRANCH_DIRECTOR ||
-                person.getPosition() == Position.SENIOR_MANAGER;
+        return position.contains(personDataBase.get(person.getId()).getPosition());
     }
 
     public boolean isEmployee(Long id) {

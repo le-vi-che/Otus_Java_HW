@@ -36,10 +36,6 @@ public class App {
         System.out.println(personDataBase.isEmployee(person4.getId()));
 
 
-//        - Написать класс со статическим методом, реализующим сортировку массива
-//        - bubbleSort(int array[]) - методом пузырька
-//    }
-
         System.out.println("-------------------------");
         bubbleSort(new int[]{199, 3, -12, 4, 27, 6, 7, 1, -2, 23, 18, 10, 16, 33, 5});
         int[] array = new int[]{199, 3, -12, 4, 27, 6, 7, 1, -2, 23, 18, 10, 16, 33, 5};
