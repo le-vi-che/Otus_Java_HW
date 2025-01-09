@@ -1,0 +1,29 @@
+CREATE TABLE public.Questions (
+id serial4 NOT NULL,
+question varchar(100) NOT NULL,
+CONSTRAINT Questions_pk PRIMARY KEY (id),
+CONSTRAINT Questions_un UNIQUE (question))
+
+CREATE TABLE public.answers (
+id serial4 NOT NULL,
+answer varchar(100) NOT NULL,
+is_correct boolean NOT NULL,
+question_id serial4 NOT NULL,
+CONSTRAINT answers_pk PRIMARY KEY (id)
+)
+
+INSERT INTO Questions (id,question) VALUES (1,'Вопрос №1'), (2,'Вопрос №2'), (3,'Вопрос №3')
+
+select *from Questions
+
+INSERT INTO answers (id,answer,is_correct,question_id) VALUES (1,'не верный ответ на 1й вопрос',false,1)
+
+select * from answers
+
+INSERT INTO answers (id,answer,is_correct,question_id) VALUES (2,'верный ответ на 1й вопрос',true,1), (3,'не верный ответ на 1й вопрос',false,1), (4,'верный ответ на 2й вопрос',true,2), (5,'не верный ответ на 2й вопрос',false,2), (6,'не верный ответ на 2й вопрос',false,2), (7,'не верный ответ на 3й вопрос',false,3),  (8,'верный ответ на 3й вопрос',true,3),  (9,'не верный ответ на 3й вопрос',false,3)
+
+UPDATE answers SET is_correct=false where id=1
+
+select answer from answers where question_id=2 and is_correct=true
+
+select quest.id,question, answer, is_correct from Questions quest join answers answ on quest.id=answ.question_id order by quest.id
