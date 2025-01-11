@@ -9,15 +9,18 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Server {
     private int port;
     private List<ClientHandler> clients;
+    private AuthenticatedProvider authenticatedProvider;
 
     public Server(int port) {
         this.port = port;
         clients = new CopyOnWriteArrayList<>();
+        authenticatedProvider = new InMemoryAuthenticatedProvider(this);
     }
 
     public void start(){
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Сервер запущен на порту: " + port);
+            authenticatedProvider.initialize();
             while (true) {
                 Socket socket = serverSocket.accept();
                 subscribe(new ClientHandler(socket, this));
@@ -58,5 +61,18 @@ public class Server {
                 return;
             }
         }
+    }
+
+    public boolean isUsernameBusy (String username){
+        for(ClientHandler c : clients){
+            if (c.getUsername().equals(username)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public AuthenticatedProvider getAuthenticatedProvider() {
+        return authenticatedProvider;
     }
 }

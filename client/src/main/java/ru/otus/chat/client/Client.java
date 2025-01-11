@@ -22,10 +22,18 @@ public class Client {
             try {
                 while (true) {
                     String message = in.readUTF();
-                    if (message.startsWith("/")) {
-                        if (message.equalsIgnoreCase("/exitok")) {
-                            break;
-                        }
+                        if (message.startsWith("/")) {
+                            if (message.equalsIgnoreCase("/exitok")) {
+                                break;
+                            }
+                            if (message.startsWith("/authok ")) {
+                                System.out.println("Удалось успешно войти в чат с именем пользователя "
+                                        + message.split(" ")[1]);
+                            }
+                            if (message.startsWith("/regok ")) {
+                                System.out.println("Удалось успешно зарегистрироваться с именем пользователя "
+                                        + message.split(" ")[1]);
+                            }
                     } else {
                         System.out.println(message);
                     }
