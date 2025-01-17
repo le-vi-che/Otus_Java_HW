@@ -6,76 +6,91 @@ import java.io.IOException;
 import java.net.Socket;
 //Добавьте пользователям роли: USER, ADMIN
 //Для пользователей с ролью ADMIN реализуйте возможность отключения пользователей от чата с помощью команды «/kick username»
-
 public class ClientHandler {
-    private Socket socket;
     private Server server;
+    private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
-
     private String username;
+    private Role role;
 
-    public ClientHandler(Socket socket, Server server) throws IOException {
-        this.socket = socket;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUser(String username, Role role) {
+        this.username = username;
+        this.role = role;
+    }
+
+    public ClientHandler(Server server, Socket socket) throws IOException {
         this.server = server;
+        this.socket = socket;
         this.in = new DataInputStream(socket.getInputStream());
         this.out = new DataOutputStream(socket.getOutputStream());
-
         new Thread(() -> {
             try {
-                System.out.println("Клиент подключился на порту:" + socket.getPort());
-                //цикл аутентификации
+                System.out.println("Клиент подключился ");
                 while (true) {
-                    sendMsg("Для начала работы надо пройти аутентификацию. Формат команды /auth login password \n" +
-                            "или регистрацию. Формат команды /reg login password username ");
-
                     String message = in.readUTF();
-                    if (message.startsWith("/")) {
-                        if (message.equalsIgnoreCase("/exit")) {
-                            sendMsg("/exitok");
+                    if (message.equals("/exit")) {
+                        sendMessage("/exitok");
+                        return;
+                    }
+                    // /auth login password
+                    if (message.startsWith("/auth ")) {
+                        String[] elements = message.split(" ");
+                        if (elements.length != 3) {
+                            sendMessage("Неверный формат команды /auth");
+                            continue;
+                        }
+                        if (server.getAuthenticationProvider()
+                                .authenticate(this, elements[1], elements[2])) {
                             break;
                         }
-                        // /auth login password
-                        if (message.startsWith("/auth ")) {
-                            String[] element = message.split(" ");
-                            if (element.length != 3){
-                                sendMsg("Неверный формат команды /auth");
-                                continue;
-                            }
-                            if (server.getAuthenticatedProvider()
-                                    .authenticate(this, element[1], element[2])){
-
-                                break;
-                            }
-                        }
-                        // /reg login password username
-                        if (message.startsWith("/reg ")) {
-                            String[] element = message.split(" ");
-                            if (element.length != 4){
-                                sendMsg("Неверный формат команды /reg");
-                                continue;
-                            }
-                            if (server.getAuthenticatedProvider()
-                                    .registration(this, element[1], element[2], element[3])){
-                                break;
-                            }
-                        }
+                        continue;
                     }
+                    // /reg login password username
+                    if (message.startsWith("/reg ")) {
+                        String[] elements = message.split(" ");
+                        if (elements.length != 4) {
+                            sendMessage("Неверный формат команды /reg");
+                            continue;
+                        }
+                        if (server.getAuthenticationProvider()
+                                .registration(this, elements[1], elements[2], elements[3])) {
+                            break;
+                        }
+                        continue;
+                    }
+                    sendMessage("Перед работой с чатом необходимо выполнить аутентификацию "
+                + "/auth login password' или регистрацию '/register login password username'");
                 }
+                System.out.println("Клиент " + username + " успешно прошел аутентификацию");
                 //цикл работы
                 while (true) {
                     String message = in.readUTF();
                     if (message.startsWith("/")) {
-                        if (message.equalsIgnoreCase("/exit")) {
-                            equals("/exitok");
+                        if (message.equals("/exit")) {
+                            sendMessage("/exitok");
                             break;
                         }
                         if (message.startsWith("/w")) {
                             server.personalMessage(this, message);
                         }
-                    } else {
-                        server.broadcastMessage(username + " : " + message);
+
+                        if (message.startsWith("/kick")) {
+                            if (role != Role.ADMIN) {
+                                sendMessage("Нет роли ADMIN");
+                                continue;
+                            }
+                            String[] elements = message.split(" ");
+                            server.kickUser(this, elements[1]);
+                            continue;
+                        }
+                        continue;
                     }
+                    server.broadcastMessage(username + ": " + message);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -85,11 +100,11 @@ public class ClientHandler {
         }).start();
     }
 
-    public void sendMsg(String message) {
+    public void sendMessage(String message) {
         try {
             out.writeUTF(message);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -116,13 +131,5 @@ public class ClientHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username){
-        this.username = username;
     }
 }

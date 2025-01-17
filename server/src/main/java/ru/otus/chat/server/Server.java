@@ -1,49 +1,74 @@
 package ru.otus.chat.server;
 
-import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+
 
 public class Server {
     private int port;
     private List<ClientHandler> clients;
     private AuthenticatedProvider authenticatedProvider;
 
-    public Server(int port) {
-        this.port = port;
-        clients = new CopyOnWriteArrayList<>();
-        authenticatedProvider = new InMemoryAuthenticatedProvider(this);
+    public AuthenticatedProvider getAuthenticationProvider() {
+        return authenticatedProvider;
     }
 
-    public void start(){
+    public Server(int port) {
+        this.port = port;
+        this.clients = new ArrayList<>();
+        this.authenticatedProvider = new InMemoryAuthenticationProvider(this);
+    }
+
+    public void start() {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Сервер запущен на порту: " + port);
             authenticatedProvider.initialize();
             while (true) {
                 Socket socket = serverSocket.accept();
-                subscribe(new ClientHandler(socket, this));
+                new ClientHandler(this, socket);
             }
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void subscribe(ClientHandler clientHandler){
+    public synchronized void subscribe(ClientHandler clientHandler) {
+        broadcastMessage("В чат зашел: " + clientHandler.getUsername());
         clients.add(clientHandler);
     }
 
-    public void unsubscribe(ClientHandler clientHandler){
+    public synchronized void unsubscribe(ClientHandler clientHandler) {
         clients.remove(clientHandler);
-        broadcastMessage("Из чата вышел: "+ clientHandler.getUsername());
+        broadcastMessage("Из чата вышел: " + clientHandler.getUsername());
     }
 
-    public void broadcastMessage(String message){
+    public synchronized void broadcastMessage(String message) {
         for (ClientHandler c : clients) {
-            c.sendMsg(message);
+            c.sendMessage(message);
         }
+    }
+
+    public boolean isUsernameBusy(String username) {
+        for (ClientHandler c : clients) {
+            if (c.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public synchronized void kickUser(ClientHandler admin, String username) {
+        for (ClientHandler c : clients) {
+            if (c.getUsername().equals(username)) {
+                c.sendMessage("Отключен от чата пользователем " + admin.getUsername());
+                admin.sendMessage("Пользователь " + c.getUsername() + " отключен от чата");
+                c.disconnect();
+                return;
+            }
+        }
+        admin.sendMessage("Пользователь " + username + " не в сети");
     }
 
     public synchronized void personalMessage(ClientHandler from, String message) {
@@ -57,22 +82,9 @@ public class Server {
 
         for (ClientHandler cl : clients) {
             if (cl.getUsername().equals(username)) {
-                cl.sendMsg("Личное сообщение от " + from.getUsername() + ": " + message);
+                cl.sendMessage("Личное сообщение от " + from.getUsername() + ": " + message);
                 return;
             }
         }
-    }
-
-    public boolean isUsernameBusy (String username){
-        for(ClientHandler c : clients){
-            if (c.getUsername().equals(username)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public AuthenticatedProvider getAuthenticatedProvider() {
-        return authenticatedProvider;
     }
 }
