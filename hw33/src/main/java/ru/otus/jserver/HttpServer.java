@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 public class HttpServer {
     private int port;
     private Dispatcher dispatcher;
-    static ExecutorService executor = Executors.newFixedThreadPool(3);
+    private ExecutorService executor = Executors.newFixedThreadPool(3);
 
     public HttpServer(int port) {
         this.port = port;
